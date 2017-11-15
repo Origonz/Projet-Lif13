@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import projet.lif13.Grille;
 import projet.lif13.Case;
@@ -28,18 +29,21 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) {
         Grille gr = new Grille(6, 3);
-        Node n;
+        Text t;
         
+        BorderPane border = new BorderPane();
         GridPane gPane = new GridPane();
         
         for (int i = 0; i < gr.getLongueur(); i++) {
             for (int j = 0; j < gr.getLargeur(); j++) {
-                n = new Text(Integer.toString(((Case)gr[i][j]).getId()));
-                gPane.add(((Case)gr[i][j]).getId(), i, j);
+                t = new Text(Integer.toString(gr.getTab(i, j)));
+                t.setWrappingWidth(30);
+                t.setTextAlignment(TextAlignment.CENTER);
+                gPane.add(t, i, j);
             }
         }
         
-        //root.getChildren().add();
+        border.setCenter(gPane);
         
         Scene scene = new Scene(gPane, 300, 250);
         
