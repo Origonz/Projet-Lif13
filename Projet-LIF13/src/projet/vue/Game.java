@@ -8,9 +8,11 @@ package projet.vue;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -18,7 +20,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import projet.lif13.Grille;
-import projet.lif13.Case;
 
 /**
  *
@@ -28,23 +29,35 @@ public class Game extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Grille gr = new Grille(6, 3);
-        Text t;
+        Grille gr = new Grille(3, 3);
+        Case c;
         
         BorderPane border = new BorderPane();
         GridPane gPane = new GridPane();
         
         for (int i = 0; i < gr.getLongueur(); i++) {
             for (int j = 0; j < gr.getLargeur(); j++) {
-                t = new Text(Integer.toString(gr.getTab(i, j)));
-                t.setWrappingWidth(30);
-                t.setTextAlignment(TextAlignment.CENTER);
-                gPane.add(t, i, j);
+                c = new Case((gr.getTab(i, j)), i, j);
+                gPane.add(c, i, j);
+                
+                c.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ((Case)event.getSource()).changeEtat();
+                    }
+                });
             }
         }
         
         border.setCenter(gPane);
         
+        Button bouton = new Button("Reset");
+        bouton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Reset gr
+            }
+        });
         
         Scene scene = new Scene(border);
         
