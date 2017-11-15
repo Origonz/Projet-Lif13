@@ -18,7 +18,7 @@ public class ProjetLIF13 {
      */
     public static void main(String[] args) {
        Controleur c = new Controleur();
-       c.initialisation(3);
+       c.placementpoints();
        c.affichage();
        c.jouerCoup(2, 0);
        c.affichage();
