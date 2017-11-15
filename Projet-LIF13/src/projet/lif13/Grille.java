@@ -16,9 +16,14 @@ public class Grille {
     
     Grille(int l,int L){
         if(l*L>1){
-            longueur=l;
-            largeur=L;
-            tab = new Case[l][L];
+            largeur=l;
+            longueur=L;
+            tab = new Case[L][l];
+            for(int i=0;i<longueur;i++){
+                for(int j=0;j<largeur;j++){
+                tab[i][j]= new Case();
+                }
+            }
         }else{
             System.out.println("Erreur lors de la saisie des données");
         }
