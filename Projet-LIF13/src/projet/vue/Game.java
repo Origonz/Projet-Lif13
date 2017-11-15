@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,7 +35,7 @@ public class Game extends Application {
         
         BorderPane border = new BorderPane();
         GridPane gPane = new GridPane();
-        
+                
         for (int i = 0; i < gr.getLongueur(); i++) {
             for (int j = 0; j < gr.getLargeur(); j++) {
                 c = new Case((gr.getTab(i, j)), i, j);
@@ -56,8 +57,18 @@ public class Game extends Application {
             @Override
             public void handle(MouseEvent event) {
                 //Reset gr
+                for (Node n : gPane.getChildren()) {
+                    ((Case)n).reset();
+                }
             }
         });
+        
+        border.setBottom(bouton);
+        
+        border.setPadding(new Insets(10));
+        border.setMargin(bouton, new Insets(10));
+        gPane.setVgap(20);
+        gPane.setHgap(20);
         
         Scene scene = new Scene(border);
         
