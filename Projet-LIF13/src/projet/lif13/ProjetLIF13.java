@@ -6,7 +6,6 @@
 package projet.lif13;
 
 import projet.lif13.controleur.Controleur;
-import projet.lif13.modele.Grille;
 
 /**
  *
@@ -19,9 +18,14 @@ public class ProjetLIF13 {
      */
     public static void main(String[] args) {
        Controleur c = new Controleur();
-       c.affiche();
        c.initialisation(3);
-       c.affiche();
+       c.affichage();
+       c.jouerCoup(2, 0);
+       c.affichage();
+       c.valider();
+       c.affichage();
+       c.reset();
+       c.affichage();
     }
     
 }
