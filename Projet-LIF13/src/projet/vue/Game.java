@@ -45,9 +45,9 @@ public class Game extends Application {
         
         border.setCenter(gPane);
         
-        Scene scene = new Scene(gPane, 300, 250);
+        Scene scene = new Scene(border);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Le Jeu");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
