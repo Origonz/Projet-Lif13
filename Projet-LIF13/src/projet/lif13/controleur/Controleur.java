@@ -5,6 +5,7 @@
  */
 package projet.lif13.controleur;
 
+import static java.lang.Math.random;
 import projet.lif13.modele.Grille;
 
 /**
@@ -43,6 +44,8 @@ public class Controleur {
     }
     
     public void initialisation(int lvl){
+        vides--;
+        vides--;
         niveau=lvl;
         switch (lvl) {
             case 1:  g.setTab(0, 0, lvl);
@@ -95,9 +98,11 @@ public class Controleur {
     }
     
     public void fin(){
-        ligne = false;
-        valider();
-        victoire();
+        if(ligne){
+            ligne = false;
+            valider();
+            victoire();
+        }
     }
     
     public void reset(){
@@ -109,6 +114,32 @@ public class Controleur {
                 }
             }
         }   
+    }
+    
+    public void placementpoints(){ //calculer quand les points sont valide
+        vides--;
+        vides--;
+        int x,y;
+        if(g.getLargeur()%2==1){
+            for(int i=0;i<2;i++){
+                do{
+                    x = (int) (random()*g.getLongueur());
+                    y = (int) (random()*g.getLargeur());
+                }while((x+y)%2==0 && g.valide(x, y));
+                g.setTab(x, y, 1);
+            }
+        }else{
+            do{
+                x = (int) (random()*g.getLongueur());
+                y = (int) (random()*g.getLargeur());
+            }while((x+y)%2==0 && g.valide(x, y));
+                g.setTab(x, y, 1);
+            do{
+                x = (int) (random()*g.getLongueur());
+                y = (int) (random()*g.getLargeur());
+            }while((x+y)%2==1 && g.valide(x, y));
+                g.setTab(x, y, 1);
+        }
     }
     
 }
