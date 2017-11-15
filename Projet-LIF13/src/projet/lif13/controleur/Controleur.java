@@ -68,6 +68,7 @@ public class Controleur {
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){
                 if(g.getTab(i, j)==5){
+                    vides++;
                     g.setTab(i, j, 0);
                 }
             }
