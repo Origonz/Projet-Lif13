@@ -67,25 +67,25 @@ public class Grille {
         return result;
     }
     
-    public void initpoints(int nb_points_pairs){
+    /*public void initpoints(int nb_points_pairs){
         if(nb_points_pairs>0){
             for(int i=1;i<nb_points_pairs+1;i++){
                 randpoint(i);
                 randpoint(i);
             }
         }
-    }
+    }*/
     
-    public boolean valide(int x,int y){
+    public boolean valide(int x,int y){ //permet de déterminer si la case est vide
         return tab[x][y].getId()==0;
     }
     
-    public void randpoint(int id){
+/*    public void randpoint(int id){
         int x=0,y=0;
         do{
             x = (int)(random()*longueur);
             y = (int)(random()*largeur);
         }while(!valide(x,y));
         tab[x][y].setId(id);
-    }
+    }*/
 }

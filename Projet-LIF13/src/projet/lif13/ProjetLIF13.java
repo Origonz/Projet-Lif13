@@ -15,8 +15,7 @@ public class ProjetLIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       Grille g = new Grille(6,3);
-       g.initpoints(5);
+       Grille g = new Grille(100,110);
        System.out.println(g.toString());
     }
     
