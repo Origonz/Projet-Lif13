@@ -45,6 +45,7 @@ public class Game extends Application {
         
         border.setCenter(gPane);
         
+        
         Scene scene = new Scene(border);
         
         primaryStage.setTitle("Le Jeu");
