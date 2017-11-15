@@ -5,6 +5,9 @@
  */
 package projet.lif13;
 
+import projet.lif13.controleur.Controleur;
+import projet.lif13.modele.Grille;
+
 /**
  *
  * @author billy
@@ -15,9 +18,10 @@ public class ProjetLIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       Grille g = new Grille(6,3);
-       g.initpoints(5);
-       System.out.println(g.toString());
+       Controleur c = new Controleur();
+       c.affiche();
+       c.initialisation(3);
+       c.affiche();
     }
     
 }
