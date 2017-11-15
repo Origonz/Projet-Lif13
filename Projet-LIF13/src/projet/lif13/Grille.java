@@ -5,6 +5,8 @@
  */
 package projet.lif13;
 
+import static java.lang.Math.random;
+
 /**
  *
  * @author billy
@@ -14,7 +16,7 @@ public class Grille {
     private int longueur;
     private int largeur;
     
-    Grille(int l,int L){
+    public Grille(int l,int L){
         if(l*L>1){
             largeur=l;
             longueur=L;
@@ -63,5 +65,27 @@ public class Grille {
             result+="\n";
         }
         return result;
+    }
+    
+    public void initpoints(int nb_points_pairs){
+        if(nb_points_pairs>0){
+            for(int i=1;i<nb_points_pairs+1;i++){
+                randpoint(i);
+                randpoint(i);
+            }
+        }
+    }
+    
+    public boolean valide(int x,int y){
+        return tab[x][y].getId()==0;
+    }
+    
+    public void randpoint(int id){
+        int x=0,y=0;
+        do{
+            x = (int)(random()*longueur);
+            y = (int)(random()*largeur);
+        }while(!valide(x,y));
+        tab[x][y].setId(id);
     }
 }

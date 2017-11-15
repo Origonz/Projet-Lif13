@@ -16,6 +16,7 @@ public class ProjetLIF13 {
      */
     public static void main(String[] args) {
        Grille g = new Grille(6,3);
+       g.initpoints(5);
        System.out.println(g.toString());
     }
     
