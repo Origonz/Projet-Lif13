@@ -14,7 +14,7 @@ public class Grille {
     private int longueur;
     private int largeur;
     
-    Grille(int l,int L){
+    public Grille(int l,int L){
         if(l*L>1){
             longueur=l;
             largeur=L;
