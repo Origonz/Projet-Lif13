@@ -15,17 +15,22 @@ public class Controleur {
     private Grille g;
     private int vides;
     private int niveau;
+    private boolean ligne;
     // 5 corespond au ligne non validé
     // 4 corespond au ligne validé
     
     public Controleur(Grille a){
         g=a;
         vides = a.getLargeur()*a.getLongueur();
+        ligne = false;
+        niveau = 0;
     }
     
     public Controleur(){
         g = new Grille(4,4);
         vides = 16;
+        ligne = false;
+        niveau = 0;
     }
     
     public boolean jouerCoup(int x,int y){
@@ -64,7 +69,7 @@ public class Controleur {
             System.out.println("Victoire !!!");
     }
     
-    public void reset(){
+    public void annuler(){
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){
                 if(g.getTab(i, j)==5){
@@ -85,4 +90,25 @@ public class Controleur {
         }
     }
    
+    public void debut(){
+        ligne = true;
+    }
+    
+    public void fin(){
+        ligne = false;
+        valider();
+        victoire();
+    }
+    
+    public void reset(){
+        for(int i=0;i<g.getLongueur();i++){
+            for(int j=0;j<g.getLargeur();j++){
+                if(g.getTab(i, j)!=niveau){
+                    vides++;
+                    g.setTab(i, j, 0);
+                }
+            }
+        }   
+    }
+    
 }
