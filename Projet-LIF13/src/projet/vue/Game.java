@@ -6,9 +6,7 @@
 package projet.vue;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,9 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import projet.lif13.Grille;
 
@@ -28,12 +23,15 @@ import projet.lif13.Grille;
  */
 public class Game extends Application {
     
+    Option opt;
+    
     @Override
     public void start(Stage primaryStage) {
         Grille gr = new Grille(3, 3);
         Case c;
+        opt = new Option(primaryStage);
         
-        BorderPane border = new BorderPane();
+        BorderPane mainBorder = new BorderPane();
         GridPane gPane = new GridPane();
                 
         for (int i = 0; i < gr.getLongueur(); i++) {
@@ -50,7 +48,11 @@ public class Game extends Application {
             }
         }
         
-        border.setCenter(gPane);
+        mainBorder.setCenter(gPane);
+        
+        //ici on s'occupe des options panes
+        
+        //ici c'est fini
         
         Button bouton = new Button("Reset");
         bouton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -63,14 +65,28 @@ public class Game extends Application {
             }
         });
         
-        border.setBottom(bouton);
+        Button b2 = new Button("Options");
+        b2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                opt.Show();
+            }
+        });
         
-        border.setPadding(new Insets(10));
-        border.setMargin(bouton, new Insets(10));
+        GridPane boutonPane = new GridPane();
+        boutonPane.add(bouton, 0, 0);
+        boutonPane.add(b2, 1, 0);
+        
+        mainBorder.setBottom(boutonPane);
+        
+        mainBorder.setPadding(new Insets(10));
+        BorderPane.setMargin(boutonPane, new Insets(20, 10, 10, 10));
         gPane.setVgap(20);
         gPane.setHgap(20);
+        boutonPane.setVgap(20);
+        boutonPane.setHgap(20);
         
-        Scene scene = new Scene(border);
+        Scene scene = new Scene(mainBorder);
         
         primaryStage.setTitle("Le Jeu");
         primaryStage.setScene(scene);
