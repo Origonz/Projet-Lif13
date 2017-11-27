@@ -8,9 +8,12 @@ package projet.vue;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -27,8 +30,9 @@ public class Game extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Grille gr = new Grille(3, 3);
+        Grille gr = new Grille(3, 9);
         Case c;
+        Separator s;
         opt = new Option(primaryStage);
         
         BorderPane mainBorder = new BorderPane();
@@ -47,6 +51,10 @@ public class Game extends Application {
                 });
             }
         }
+
+        s = new Separator(Orientation.HORIZONTAL);
+        s.setScaleX(100);
+        gPane.add(s, 0, gr.getLargeur());
         
         mainBorder.setCenter(gPane);
         
@@ -54,18 +62,20 @@ public class Game extends Application {
         
         //ici c'est fini
         
-        Button bouton = new Button("Reset");
+        Button bouton = new Button("Recommencer");
+        bouton.setPrefWidth(100);
         bouton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 //Reset gr
                 for (Node n : gPane.getChildren()) {
-                    ((Case)n).reset();
+                    if (n instanceof Case) ((Case)n).reset();
                 }
             }
         });
         
         Button b2 = new Button("Options");
+        b2.setPrefWidth(100);
         b2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -80,7 +90,7 @@ public class Game extends Application {
         mainBorder.setBottom(boutonPane);
         
         mainBorder.setPadding(new Insets(10));
-        BorderPane.setMargin(boutonPane, new Insets(20, 10, 10, 10));
+        BorderPane.setMargin(boutonPane, new Insets(10));
         gPane.setVgap(20);
         gPane.setHgap(20);
         boutonPane.setVgap(20);
@@ -88,7 +98,9 @@ public class Game extends Application {
         
         Scene scene = new Scene(mainBorder);
         
-        primaryStage.setTitle("Le Jeu");
+        primaryStage.setTitle("Connects");
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("projet/ressources/logo.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
     }
