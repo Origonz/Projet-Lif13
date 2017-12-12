@@ -20,12 +20,7 @@ public class ProjetLIF13 {
        Controleur c = new Controleur();
        c.placementpoints();
        c.affichage();
-       c.jouerCoup(2, 0);
-       c.affichage();
-       c.valider();
-       c.affichage();
-       c.reset();
-       c.affichage();
+       
     }
     
 }
