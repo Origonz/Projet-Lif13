@@ -41,7 +41,7 @@ public class Controleur {
         int cox,coy;
         cox = Math.abs(x-xp);
         coy = Math.abs(y-yp);
-        if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur() && g.valide(x, y) && (cox==0 || cox==1) && (coy==0 || coy==1)) {
+        if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur() && g.valide(x, y) && (cox+coy==1)) {
             g.setTab(x, y, 5);
             vides--;
             xp=x;
@@ -148,13 +148,13 @@ public class Controleur {
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
-            }while(g.valide(x, y) && (x+y)%2==0);
-                g.setTab(x, y, 1);
+            }while(!(g.valide(x, y) && (x+y)%2==0));
+            g.setTab(x, y, 1);
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
-            }while(g.valide(x, y) && (x+y)%2==1);
-                g.setTab(x, y, 1);
+            }while(!(g.valide(x, y) && (x+y)%2==1));
+            g.setTab(x, y, 1);
         }
     }
     

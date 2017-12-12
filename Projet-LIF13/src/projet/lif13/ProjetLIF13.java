@@ -6,6 +6,7 @@
 package projet.lif13;
 
 import projet.lif13.controleur.Controleur;
+import projet.lif13.modele.Grille;
 
 /**
  *
