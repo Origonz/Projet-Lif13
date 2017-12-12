@@ -17,6 +17,7 @@ public class Controleur {
     private int vides;
     private int niveau;
     private boolean ligne;
+    private int xp,yp;
     // 5 corespond au ligne non validé
     // 4 corespond au ligne validé
     
@@ -25,6 +26,7 @@ public class Controleur {
         vides = a.getLargeur()*a.getLongueur();
         ligne = false;
         niveau = 0;
+        xp=yp=-1;
     }
     
     public Controleur(){
@@ -32,12 +34,18 @@ public class Controleur {
         vides = 16;
         ligne = false;
         niveau = 0;
+        xp=yp=-1;
     }
     
     public boolean jouerCoup(int x,int y){
-        if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur() && g.valide(x, y)){
+        int cox,coy;
+        cox = Math.abs(x-xp);
+        coy = Math.abs(y-yp);
+        if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur() && g.valide(x, y) && (cox==0 || cox==1) && (coy==0 || coy==1)) {
             g.setTab(x, y, 5);
             vides--;
+            xp=x;
+            yp=y;
             return true;
         }
         return false;
@@ -105,16 +113,24 @@ public class Controleur {
         }
     }
     
-    public void reset(){
+    public void resetall(){
         for(int i=0;i<g.getLongueur();i++){
-            for(int j=0;j<g.getLargeur();j++){
-                if(g.getTab(i, j)!=niveau){
-                    vides++;
+            for(int j=0;j<g.getLargeur();j++){   
+                    g.setTab(i, j, 0);
+            }
+        }   
+    }
+    
+    public void resetwithpoints(){
+        for(int i=0;i<g.getLongueur();i++){
+            for(int j=0;j<g.getLargeur();j++){ 
+                if(g.getTab(i, j)!=1){
                     g.setTab(i, j, 0);
                 }
             }
         }   
     }
+    
     
     public void placementpoints(){ //calculer quand les points sont valide
         vides--;
@@ -132,12 +148,12 @@ public class Controleur {
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
-            }while((x+y)%2==0 && g.valide(x, y));
+            }while(g.valide(x, y) && (x+y)%2==0);
                 g.setTab(x, y, 1);
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
-            }while((x+y)%2==1 && g.valide(x, y));
+            }while(g.valide(x, y) && (x+y)%2==1);
                 g.setTab(x, y, 1);
         }
     }
