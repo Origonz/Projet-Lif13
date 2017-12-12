@@ -7,6 +7,7 @@ package projet.lif13.controleur;
 
 import static java.lang.Math.random;
 import projet.lif13.modele.Grille;
+import projet.lif13.Variables;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Controleur {
         cox = Math.abs(x-xp);
         coy = Math.abs(y-yp);
         if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur() && g.valide(x, y) && (cox+coy==1)) {
-            g.setTab(x, y, 5);
+            g.setTab(x, y, Variables.EN_COURS);
             vides--;
             xp=x;
             yp=y;
@@ -81,9 +82,10 @@ public class Controleur {
     }
     
     public void annuler(){
+        xp=yp=-1;
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){
-                if(g.getTab(i, j)==5){
+                if(g.getTab(i, j)==Variables.EN_COURS){
                     vides++;
                     g.setTab(i, j, 0);
                 }
@@ -94,8 +96,8 @@ public class Controleur {
     public void valider(){
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){
-                if(g.getTab(i, j)==5){
-                    g.setTab(i, j, 4);
+                if(g.getTab(i, j)==Variables.EN_COURS){
+                    g.setTab(i, j, Variables.VALIDER);
                 }
             }
         }
@@ -114,6 +116,8 @@ public class Controleur {
     }
     
     public void resetall(){
+        xp=yp=-1;
+        vides = g.getLargeur()*g.getLongueur();
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){   
                     g.setTab(i, j, 0);
@@ -122,15 +126,21 @@ public class Controleur {
     }
     
     public void resetwithpoints(){
+        xp=yp=-1;
+        vides = g.getLargeur()*g.getLongueur()-2;
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){ 
-                if(g.getTab(i, j)!=1){
+                if(g.getTab(i, j)!=Variables.POINT){
                     g.setTab(i, j, 0);
                 }
             }
         }   
     }
     
+    public void possible(int x,int y){
+        if(g.valide(x+1, y))
+            g.setTab(x+1, y, Variables.POSSIBLE);
+    }
     
     public void placementpoints(){ //calculer quand les points sont valide
         vides--;
@@ -142,19 +152,19 @@ public class Controleur {
                     x = (int) (random()*g.getLongueur());
                     y = (int) (random()*g.getLargeur());
                 }while((x+y)%2==0 && g.valide(x, y));
-                g.setTab(x, y, 1);
+                g.setTab(x, y, Variables.POINT);
             }
         }else{
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
             }while(!(g.valide(x, y) && (x+y)%2==0));
-            g.setTab(x, y, 1);
+            g.setTab(x, y, Variables.POINT);
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
             }while(!(g.valide(x, y) && (x+y)%2==1));
-            g.setTab(x, y, 1);
+            g.setTab(x, y, Variables.POINT);
         }
     }
     

@@ -75,7 +75,9 @@ public class Grille {
     }*/
     
     public boolean valide(int x,int y){
-        return tab[x][y].getId()==0;
+        if(x<longueur && y<largeur && x*y>=0)
+            return tab[x][y].getId()==0;
+        return false;
     }
     
     /*public void randpoint(int id){
