@@ -21,14 +21,9 @@ public class Controleur {
     private int lastCaseJoue[];
     private Case lastCaseVue;
     
-    private int longueur;
-    private int largeur;
-    
     public Controleur(FenGame game){
         this.game = game;
-        longueur = 4;
-        largeur = 4;
-        g=new Grille(longueur, largeur);
+        g=new Grille(4, 4);
         vides = g.getLargeur()*g.getLongueur();
         ligne = false;
         niveau = 0;
@@ -38,19 +33,19 @@ public class Controleur {
     }
 
     public void setLongueur(int longueur) {
-        this.longueur = longueur;
+        g.setLongueur(longueur);
     }
 
     public void setLargeur(int largeur) {
-        this.largeur = largeur;
+        g.setLargeur(largeur);
     }
 
     public int getLongueur() {
-        return longueur;
+        return g.getLongueur();
     }
 
     public int getLargeur() {
-        return largeur;
+        return g.getLargeur();
     }
     
     /**
@@ -85,25 +80,6 @@ public class Controleur {
             }
         }
         return false;
-    }
-    
-    public void initialisation(int lvl){
-        vides--;
-        vides--;
-        niveau=lvl;
-        switch (lvl) {
-            case 1:  g.setTab(0, 0, lvl);
-                     g.setTab(0, 1, lvl);
-                     break;
-            case 3:  g.setTab(0, 0, lvl);
-                     g.setTab(2, 1, lvl);
-                     break;
-            case 2:  g.setTab(2, 3, lvl);
-                     g.setTab(1, 3, lvl);
-                     break;
-            default: ;
-                     break;
-        }
     }
     
     public void affichage(){
@@ -165,37 +141,11 @@ public class Controleur {
     }
     
     public void reset() {
-        g = new Grille(longueur, largeur);
+        g = new Grille(getLongueur(), getLargeur());
         lastCaseJoue[0] = -1;
         lastCaseJoue[1] = -1;
         lastCaseVue = null;
         game.reset();
-    }
-    
-    public void placementpoints(){ //calculer quand les points sont valide
-        vides--;
-        vides--;
-        int x,y;
-        if(g.getLargeur()%2==1){
-            for(int i=0;i<2;i++){
-                do{
-                    x = (int) (random()*g.getLongueur());
-                    y = (int) (random()*g.getLargeur());
-                }while((x+y)%2==0 && g.valide(x, y));
-                g.setTab(x, y, 1);
-            }
-        }else{
-            do{
-                x = (int) (random()*g.getLongueur());
-                y = (int) (random()*g.getLargeur());
-            }while((x+y)%2==0 && g.valide(x, y));
-                g.setTab(x, y, 1);
-            do{
-                x = (int) (random()*g.getLongueur());
-                y = (int) (random()*g.getLargeur());
-            }while((x+y)%2==1 && !g.valide(x, y));
-                g.setTab(x, y, 1);
-        }
     }
     
     public int getIdGraphiqueCase(int x, int y) {
@@ -248,18 +198,18 @@ public class Controleur {
 
     public boolean acceptSetDimensions(String longueur, String largeur) {
         int la, lo;
-        la = this.largeur;
-        lo = this.longueur;
+        la = getLargeur();
+        lo = getLongueur();
         try {
-            this.longueur = Integer.parseInt(longueur);
-            this.largeur = Integer.parseInt(largeur);
-            if (this.largeur <= 0 || this.longueur <= 0) {
+            setLongueur(Integer.parseInt(longueur));
+            setLargeur(Integer.parseInt(largeur));
+            if (getLargeur() <= 0 || getLongueur() <= 0) {
                 throw new Exception();
             }
             return true;
         } catch (Exception e) {
-            this.largeur = la;
-            this.longueur = lo;
+            setLargeur(la);
+            setLongueur(lo);
             return false;
         }
     }

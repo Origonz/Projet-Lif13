@@ -1,5 +1,7 @@
 package projet.modele;
 
+import static java.lang.Math.random;
+
 /**
  *
  * @author billy
@@ -113,6 +115,46 @@ public class Grille {
                     taby.setMazeValue(k, 0);
                 }
             }
+        }
+    }
+    
+    public void placementpoints(){ //calculer quand les points sont valide
+        int x,y;
+        if(largeur%2==1){
+            for(int i=0;i<2;i++){
+                do{
+                    x = (int) (random()*longueur);
+                    y = (int) (random()*largeur);
+                }while((x+y)%2==0 && valide(x, y));
+                tab[x][y]=new Case(1);
+            }
+        }else{
+            do{
+                x = (int) (random()*longueur);
+                y = (int) (random()*largeur);
+            }while((x+y)%2==0 && valide(x, y));
+                tab[x][y]=new Case(1);
+            do{
+                x = (int) (random()*longueur);
+                y = (int) (random()*largeur);
+            }while((x+y)%2==1 && !valide(x, y));
+                tab[x][y]=new Case(1);
+        }
+    }
+    
+    public void niveau(int lvl){
+        switch (lvl) {
+            case 1:  tab[0][0]=new Case(1);
+                     tab[0][1]=new Case(1);
+                     break;
+            case 3:  tab[0][0]=new Case(1);
+                     tab[2][1]=new Case(1);
+                     break;
+            case 2:  tab[2][3]=new Case(1);
+                     tab[3][1]=new Case(1);
+                     break;
+            default: ;
+                     break;
         }
     }
 }
