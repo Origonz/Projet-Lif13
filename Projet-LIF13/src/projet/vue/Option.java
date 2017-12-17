@@ -42,8 +42,8 @@ public class Option {
         optionStage = new Stage();
         cont = c;
         //récupérer longueur et largeur depuis la grille
-        longueur = c.getLongueur();
-        largeur = c.getLargeur();
+        longueur = c.getGrille().getLongueur();
+        largeur = c.getGrille().getLargeur();
         BorderPane optBorder = new BorderPane();
         GridPane optGPane = new GridPane();
         

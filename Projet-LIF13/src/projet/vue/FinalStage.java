@@ -2,7 +2,7 @@
 
 package projet.vue;
 
-import javafx.geometry.Pos;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,6 +29,7 @@ public class FinalStage {
         
         GridPane gPane = new GridPane();
         
+        GridPane.setHalignment(top, HPos.CENTER);
         gPane.add(top, 0, 0);
         gPane.add(bottom, 0, 1);
         gPane.setHgap(20);

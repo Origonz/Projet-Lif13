@@ -3,7 +3,7 @@ package projet.controleur;
 import static java.lang.Math.random;
 import projet.vue.Case;
 import projet.modele.Grille;
-import projet.vue.Game;
+import projet.vue.FenGame;
 
 /**
  *
@@ -11,7 +11,7 @@ import projet.vue.Game;
  */
 public class Controleur {
     private Grille g;
-    private Game game;
+    private FenGame game;
     private int vides;
     private int niveau;
     private boolean ligne;
@@ -21,24 +21,44 @@ public class Controleur {
     private int lastCaseJoue[];
     private Case lastCaseVue;
     
-    public Controleur(Grille a, Game g){
-        game = g;
-        this.g=a;
-        vides = a.getLargeur()*a.getLongueur();
+    private int longueur;
+    private int largeur;
+    
+    public Controleur(FenGame game){
+        this.game = game;
+        longueur = 4;
+        largeur = 4;
+        g=new Grille(longueur, largeur);
+        vides = g.getLargeur()*g.getLongueur();
         ligne = false;
         niveau = 0;
         lastCaseJoue = new int[2];
         lastCaseJoue[0] = -1;
         lastCaseJoue[1] = -1;
     }
-    
-    public Controleur(){
-        g = new Grille(4,4);
-        vides = 16;
-        ligne = false;
-        niveau = 0;
+
+    public void setLongueur(int longueur) {
+        this.longueur = longueur;
+    }
+
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
+
+    public int getLongueur() {
+        return longueur;
+    }
+
+    public int getLargeur() {
+        return largeur;
     }
     
+    /**
+     * A mettre dans le modele
+     * @param x
+     * @param y
+     * @return 
+     */
     public boolean jouerCoup(int x,int y){
         if(x*y>=0 && x<g.getLongueur() && y<g.getLargeur()) {
             if (g.valide(x, y) && adjacent(x, y)){
@@ -53,10 +73,14 @@ public class Controleur {
                 return true;
             } else if (g.getTab(x, y) == 1) {
                 if (lastCaseJoue[0] == -1)  {
+                    debut();
                     lastCaseJoue[0] = x;
                     lastCaseJoue[1] = y;
-                } else {
-                    //fin check si fin du game
+                } else if (adjacent(x, y)) {
+                    calcDessinChemin(x, y);
+                    g.refreshTabGraphique(lastCaseJoue[0], lastCaseJoue[1]);
+                    if (lastCaseVue != null) lastCaseVue.changeEtatAdmin(this);
+                    fin();
                 }
             }
         }
@@ -88,8 +112,7 @@ public class Controleur {
     }
     
     public void victoire(){
-        if(vides==0)
-            System.out.println("Victoire !!!");
+        game.afficherFin(vides == 0);
     }
     
     public void annuler(){
@@ -125,7 +148,7 @@ public class Controleur {
         }
     }
     
-    public void reset(){
+    public void restart(){
         for(int i=0;i<g.getLongueur();i++){
             for(int j=0;j<g.getLargeur();j++){
                 if(g.getTab(i, j)!=1){
@@ -133,7 +156,20 @@ public class Controleur {
                     g.setTab(i, j, 0);
                 }
             }
-        }   
+        }
+        g.resetMazePath();
+        lastCaseJoue[0] = -1;
+        lastCaseJoue[1] = -1;
+        lastCaseVue = null;
+        game.restart();
+    }
+    
+    public void reset() {
+        g = new Grille(longueur, largeur);
+        lastCaseJoue[0] = -1;
+        lastCaseJoue[1] = -1;
+        lastCaseVue = null;
+        game.reset();
     }
     
     public void placementpoints(){ //calculer quand les points sont valide
@@ -157,7 +193,7 @@ public class Controleur {
             do{
                 x = (int) (random()*g.getLongueur());
                 y = (int) (random()*g.getLargeur());
-            }while((x+y)%2==1 && g.valide(x, y));
+            }while((x+y)%2==1 && !g.valide(x, y));
                 g.setTab(x, y, 1);
         }
     }
@@ -204,5 +240,27 @@ public class Controleur {
 
     public void setLastCase(Case aThis) {
         lastCaseVue = aThis;
+    }
+    
+    public Grille getGrille() {
+        return g;
+    }
+
+    public boolean acceptSetDimensions(String longueur, String largeur) {
+        int la, lo;
+        la = this.largeur;
+        lo = this.longueur;
+        try {
+            this.longueur = Integer.parseInt(longueur);
+            this.largeur = Integer.parseInt(largeur);
+            if (this.largeur <= 0 || this.longueur <= 0) {
+                throw new Exception();
+            }
+            return true;
+        } catch (Exception e) {
+            this.largeur = la;
+            this.longueur = lo;
+            return false;
+        }
     }
 }
