@@ -101,18 +101,6 @@ public class Grille {
         this.largeur = largeur;
     }
     
-    @Override
-    public String toString(){
-        String result = "";
-        for(int i=0;i<longueur;i++){
-            for(int j=0;j<largeur;j++){
-                result+=tab[i][j].getId()+" ";
-            }
-            result+="\n";
-        }
-        return result;
-    }
-    
     public boolean valide(int x,int y){
         if (x<longueur && y <largeur && x*y >= 0)
             return tab[x][y].getId()==0;
@@ -159,10 +147,6 @@ public class Grille {
                 tab[x][y]=new Case(1);
         }
         }
-        niveau(lvl);
-    }
-    
-    public void niveau(int lvl){
         switch (lvl) {
             case 2:  tab[0][0]=new Case(1);
                      tab[0][1]=new Case(1);
@@ -198,14 +182,12 @@ public class Grille {
                 return true;
             } else if (tab[x][y] == new Case(1)) {
                 if (lastCaseJoue[0] == -1)  {
-                    debut();
                     lastCaseJoue[0] = x;
                     lastCaseJoue[1] = y;
                 } else if (adjacent(x, y)) {
                     calcDessinChemin(x, y);
                     refreshTabGraphique(lastCaseJoue[0], lastCaseJoue[1]);
                     if (lastCaseVue != null) lastCaseVue.changeEtatAdmin(this);
-                    fin();
                 }
             }
         }
@@ -248,42 +230,10 @@ public class Grille {
         }
     }
     
-     public void debut(){
-        ligne = true;
-    }
-    
-    public void fin(){
-        if(ligne){
-            ligne = false;
-            valider();
-        }
-    }
-    
     public int getVides(){
         return vides;
     }
-    
-    public void annuler(){
-        for(int i=0;i<longueur;i++){
-            for(int j=0;j<largeur;j++){
-                if(tab[i][j].getId()==5){
-                    vides++;
-                    tab[i][j]= new Case(0);
-                }
-            }
-        }
-    }
-    
-    public void valider(){
-        for(int i=0;i<longueur;i++){
-            for(int j=0;j<largeur;j++){
-                if(tab[i][j].getId()==5){
-                    tab[i][j]= new Case(4);
-                }
-            }
-        }
-    }
-    
+   
     public void restart(){
         for(int i=0;i<longueur;i++){
             for(int j=0;j<largeur;j++){

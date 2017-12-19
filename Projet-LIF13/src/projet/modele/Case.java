@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class Case {
     private int id;
     private int etatGraphique;
-    
-    //{^, >, v, <} (c'est les directions si t'as pas compris)
     private ArrayList<Integer> maze;
     
     Case(){
@@ -32,6 +30,11 @@ public class Case {
     
     Case(int i){
         id=i;
+        etatGraphique = 0;
+        maze = new ArrayList<>();
+        for (int j = 0; j < 4; j++) {
+            maze.add(0);
+        }
     }
 
     public int getId() {
