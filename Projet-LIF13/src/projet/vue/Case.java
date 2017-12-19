@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import projet.controleur.Controleur;
+import projet.modele.Grille;
 
 /** 
  * Element graphique du jeu.
@@ -69,8 +70,8 @@ public class Case extends ImageView {
     
     public void changeEtat(Controleur c) {
         if (c.jouerCoup(X_correspondant, Y_correspondant)) {
-            c.setLastCase(this);
-            setImage(images.get(c.getIdGraphiqueCase(X_correspondant, Y_correspondant)));
+            c.getGrille().setLastCase(this);
+            setImage(images.get(c.getGrille().getTab(X_correspondant, Y_correspondant)));
         }
     }
 
@@ -78,7 +79,7 @@ public class Case extends ImageView {
         setImage(images.get(0));
     }
 
-    public void changeEtatAdmin(Controleur c) {
-        setImage(images.get(c.getIdGraphiqueCase(X_correspondant, Y_correspondant)));
+    public void changeEtatAdmin(Grille g) {
+        setImage(images.get(g.getTabGraphique(X_correspondant, Y_correspondant)));
     }
 }

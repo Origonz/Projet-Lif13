@@ -75,7 +75,6 @@ public class FenGame extends Application{
         Case c;
         Separator s;
         
-        cont.placementpoints();
         Grille gr = cont.getGrille();
         BorderPane mainBorder = new BorderPane();
         gPane = new GridPane();
