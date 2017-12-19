@@ -13,7 +13,7 @@ public class Controleur {
     
     public Controleur(FenGame game){
         this.game = game;
-        g=new Grille(4, 4);
+        g=new Grille(4, 4, 0);
     }
     
     public boolean jouerCoup(int x,int y){
@@ -61,8 +61,8 @@ public class Controleur {
         }
     }
     
-    public void reset() {
-        g = new Grille(getLongueur(), getLargeur());
+    public void reset(int lvl) {
+        g = new Grille(getLongueur(), getLargeur(), lvl);
         game.reset();
     }
     

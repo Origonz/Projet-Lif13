@@ -16,7 +16,7 @@ public class Grille {
     private int vides;
     
     
-    public Grille(int l,int L){
+    public Grille(int l,int L,int lvl){
         if(l*L>1){
             largeur=l;
             longueur=L;
@@ -32,7 +32,7 @@ public class Grille {
             lastCaseVue = null;
             ligne = false;
             vides = largeur*longueur;
-            placementpoints();
+            placementpoints(lvl);
         }else{
             System.out.println("Erreur lors de la saisie des données");
         }
@@ -134,8 +134,10 @@ public class Grille {
         }
     }
     
-    public void placementpoints(){ //calculer quand les points sont valide
+    private void placementpoints(int lvl){ //calculer quand les points sont valide
         int x,y;
+        vides = vides - 2;
+        if(lvl==0){
         if(largeur%2==1){
             for(int i=0;i<2;i++){
                 do{
@@ -156,17 +158,25 @@ public class Grille {
             }while((x+y)%2==1 && !valide(x, y));
                 tab[x][y]=new Case(1);
         }
+        }
+        niveau(lvl);
     }
     
     public void niveau(int lvl){
         switch (lvl) {
-            case 1:  tab[0][0]=new Case(1);
+            case 2:  tab[0][0]=new Case(1);
                      tab[0][1]=new Case(1);
+                     tab[0][3]=new Case(2);
+                     tab[2][1]=new Case(2);
                      break;
             case 3:  tab[0][0]=new Case(1);
-                     tab[2][1]=new Case(1);
+                     tab[0][1]=new Case(1);
+                     tab[0][3]=new Case(2);
+                     tab[2][1]=new Case(2);
+                     tab[1][2]=new Case(3);
+                     tab[1][0]=new Case(3);
                      break;
-            case 2:  tab[2][3]=new Case(1);
+            case 1:  tab[2][3]=new Case(1);
                      tab[3][1]=new Case(1);
                      break;
             default: ;

@@ -32,9 +32,9 @@ public class Option {
     
     private final Stage optionStage;
     
-    private int longueur, largeur;
+    private int longueur, largeur, niveau;
     
-    private TextField txtLongueur, txtLargeur;
+    private TextField txtLongueur, txtLargeur, txtNiveau;
     
     private Controleur cont;
     
@@ -49,8 +49,10 @@ public class Option {
         
         txtLongueur = new TextField(Integer.toString(longueur));
         txtLargeur = new TextField(Integer.toString(largeur));
+        txtNiveau = new TextField(Integer.toString(0));
         Label lblLongueur = new Label("Longueur du plateau : ");
         Label lblLargeur = new Label("Largeur du plateau : ");
+        Label lbniveau = new Label("Niveau : ");
         Button bAccept = new Button("Valider");
         bAccept.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -70,8 +72,10 @@ public class Option {
         optGPane.add(txtLongueur, 1, 0);
         optGPane.add(lblLargeur, 0, 1);
         optGPane.add(txtLargeur, 1, 1);
-        optGPane.add(bAccept, 0, 2);
-        optGPane.add(bAnnule, 1, 2);
+        optGPane.add(lbniveau, 0, 2);
+        optGPane.add(txtNiveau, 1, 2);
+        optGPane.add(bAccept, 0, 3);
+        optGPane.add(bAnnule, 1, 3);
         optBorder.setPadding(new Insets(10));
         
         optBorder.setCenter(optGPane);
@@ -98,6 +102,7 @@ public class Option {
     public void Show() {
         txtLongueur.setText(Integer.toString(longueur));
         txtLargeur.setText(Integer.toString(largeur));
+        txtNiveau.setText(Integer.toString(niveau));
         optionStage.show();
     }
     
@@ -109,12 +114,19 @@ public class Option {
         if (cont.acceptSetDimensions(txtLongueur.getText(), txtLargeur.getText())) {
             longueur = Integer.parseInt(txtLongueur.getText());
             largeur = Integer.parseInt(txtLargeur.getText());
+            
+            if(Integer.parseInt(txtNiveau.getText())<=0 || Integer.parseInt(txtNiveau.getText())>3){
+                niveau = 0;
+            }else{
+                niveau = Integer.parseInt(txtNiveau.getText());
+            }
+           
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Information");
             a.setHeaderText(null);
             a.setContentText("Le jeu va automatiquement redémarrer pour appliquer les modifications");
             a.showAndWait();
-            cont.reset();
+            cont.reset(niveau);
             close();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
