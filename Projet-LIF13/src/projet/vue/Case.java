@@ -51,7 +51,7 @@ public class Case extends ImageView {
                 images.add(new Image("projet/ressources/b1.png", 100*4/ratio, 100*4/ratio, false, false));
                 images.add(new Image("projet/ressources/b2.png", 100*4/ratio, 100*4/ratio, false, false));
                 images.add(new Image("projet/ressources/b3.png", 100*4/ratio, 100*4/ratio, false, false));
-                setImage(images.get(0));
+                setImage(images.get(type-1));
             } catch (Exception e) {
                 System.err.println(e.getMessage() + " - " + images);
             }
